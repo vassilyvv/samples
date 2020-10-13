@@ -26,14 +26,22 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return AdaptiveScaffold(
-      title: Text('Dashboard App'),
+      titleFull: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+              children: [
+                Text('Dashboard'),
+                Image(image: AssetImage("assets/logo.png")),
+              ]
+          )
+      ),
+      title: Text('Dashboard'),
       actions: [
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: FlatButton(
-            textColor: Colors.white,
             onPressed: () => _handleSignOut(),
-            child: Text('Sign Out'),
+            child: Text('SIGN OUT', style: TextStyle(fontWeight: FontWeight.bold)),
           ),
         )
       ],
@@ -49,8 +57,7 @@ class _HomePageState extends State<HomePage> {
           _pageIndex = newIndex;
         });
       },
-      floatingActionButton:
-          _hasFloatingActionButton ? _buildFab(context) : null,
+      floatingActionButton: _hasFloatingActionButton ? _buildFab(context) : null,
     );
   }
 

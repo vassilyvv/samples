@@ -7,7 +7,7 @@ import '../../utils/chart_utils.dart' as utils;
 
 
 // The number of days to show in the chart
-const _daysBefore = 10;
+const _daysBefore = 8;
 
 class ScatterChart extends StatelessWidget {
   final List<Entry> entries;

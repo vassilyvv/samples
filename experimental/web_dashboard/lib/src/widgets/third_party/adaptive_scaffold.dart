@@ -28,6 +28,7 @@ class AdaptiveScaffoldDestination {
 /// defined in the [destinations] parameter.
 class AdaptiveScaffold extends StatefulWidget {
   final Widget title;
+  final Widget titleFull;
   final List<Widget> actions;
   final Widget body;
   final int currentIndex;
@@ -37,6 +38,7 @@ class AdaptiveScaffold extends StatefulWidget {
 
   AdaptiveScaffold({
     this.title,
+    this.titleFull,
     this.body,
     this.actions = const [],
     @required this.currentIndex,
@@ -61,7 +63,7 @@ class _AdaptiveScaffoldState extends State<AdaptiveScaffold> {
               children: [
                 DrawerHeader(
                   child: Center(
-                    child: widget.title,
+                    child: widget.titleFull,
                   ),
                 ),
                 for (var d in widget.destinations)
@@ -69,7 +71,7 @@ class _AdaptiveScaffoldState extends State<AdaptiveScaffold> {
                     selectedColor: Colors.blue[700],
                     child: ListTile(
                       leading: Icon(d.icon),
-                      title: Text(d.title),
+                      title: Text(d.title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
                       selected: widget.destinations.indexOf(d) == widget.currentIndex,
                       onTap: () => _destinationTapped(d),
                     ),
@@ -86,6 +88,7 @@ class _AdaptiveScaffoldState extends State<AdaptiveScaffold> {
             child: Scaffold(
               appBar: AppBar(
                 actions: widget.actions,
+                backgroundColor: Colors.grey[200],
               ),
               body: widget.body,
               floatingActionButton: widget.floatingActionButton,
@@ -101,6 +104,7 @@ class _AdaptiveScaffoldState extends State<AdaptiveScaffold> {
         appBar: AppBar(
           title: widget.title,
           actions: widget.actions,
+          backgroundColor: Colors.grey[200],
         ),
         body: Row(
           children: [
@@ -136,6 +140,7 @@ class _AdaptiveScaffoldState extends State<AdaptiveScaffold> {
       appBar: AppBar(
         title: widget.title,
         actions: widget.actions,
+        backgroundColor: Colors.grey[200],
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: [
