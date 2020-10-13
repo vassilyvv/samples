@@ -68,10 +68,11 @@ class _AdaptiveScaffoldState extends State<AdaptiveScaffold> {
                 ),
                 for (var d in widget.destinations)
                   ListTileTheme(
-                    selectedColor: Colors.blue[700],
+                    dense: true,
+                    selectedColor: Colors.black,
                     child: ListTile(
                       leading: Icon(d.icon),
-                      title: Text(d.title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                      title: Text(d.title, style: TextStyle(fontSize: 16)),
                       selected: widget.destinations.indexOf(d) == widget.currentIndex,
                       onTap: () => _destinationTapped(d),
                     ),

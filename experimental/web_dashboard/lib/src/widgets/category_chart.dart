@@ -26,7 +26,7 @@ class CategoryChart extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+        padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 24.0),
         child: Column(
           children: [
             Padding(
@@ -34,7 +34,7 @@ class CategoryChart extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(category.name, style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold)),
+                  Text(category.name, style: TextStyle(color: Colors.black, fontSize: 18)),
                   IconButton(
                     icon: Icon(Icons.settings),
                     onPressed: () {
@@ -50,21 +50,21 @@ class CategoryChart extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(children: [
                     _loadingText((a) => a.map((e) => e.value).reduce((a, b) => a + b).toString()),
-                    Text("Total", style: TextStyle(color: Colors.grey[700], fontSize: 14, fontWeight: FontWeight.bold)),
+                    Text("Total", style: TextStyle(color: Colors.grey[700], fontSize: 16)),
                   ]),
                   Column(children: [
                     _loadingText((a) => a.map((e) => e.value).reduce(max).toString()),
-                    Text("Max", style: TextStyle(color: Colors.grey[700], fontSize: 14, fontWeight: FontWeight.bold)),
+                    Text("Max", style: TextStyle(color: Colors.grey[700], fontSize: 16)),
                   ]),
                   Column(children: [
                     _loadingText((a) => a.map((e) => e.value).reduce(min).toString()),
-                    Text("Least", style: TextStyle(color: Colors.grey[700], fontSize: 14, fontWeight: FontWeight.bold)),
+                    Text("Least", style: TextStyle(color: Colors.grey[700], fontSize: 16)),
                   ]),
                 ],
               ),
@@ -125,7 +125,7 @@ class CategoryChart extends StatelessWidget {
               }
 
               return Text(fun(snapshot.data),
-                  style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold));
+                  style: TextStyle(color: Colors.black, fontSize: 22, fontWeight: FontWeight.bold));
             });
       },
     );

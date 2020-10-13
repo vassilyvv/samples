@@ -49,7 +49,7 @@ class Dashboard extends StatelessWidget {
     return Scrollbar(
       child: GridView(
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-          childAspectRatio: 1.5,
+          childAspectRatio: 0.75,
           maxCrossAxisExtent: 500,
         ),
         padding: EdgeInsets.all(16),
