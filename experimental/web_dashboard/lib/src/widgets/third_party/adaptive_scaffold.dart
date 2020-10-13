@@ -65,12 +65,14 @@ class _AdaptiveScaffoldState extends State<AdaptiveScaffold> {
                   ),
                 ),
                 for (var d in widget.destinations)
-                  ListTile(
-                    leading: Icon(d.icon),
-                    title: Text(d.title),
-                    selected:
-                        widget.destinations.indexOf(d) == widget.currentIndex,
-                    onTap: () => _destinationTapped(d),
+                  ListTileTheme(
+                    selectedColor: Colors.blue[700],
+                    child: ListTile(
+                      leading: Icon(d.icon),
+                      title: Text(d.title),
+                      selected: widget.destinations.indexOf(d) == widget.currentIndex,
+                      onTap: () => _destinationTapped(d),
+                    ),
                   ),
               ],
             ),

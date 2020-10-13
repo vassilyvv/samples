@@ -13,12 +13,14 @@ part of 'api.dart';
 Category _$CategoryFromJson(Map<String, dynamic> json) {
   return Category(
     json['name'] as String,
+    json['type'] as String,
   );
 }
 
 Map<String, dynamic> _$CategoryToJson(Category instance) => <String, dynamic>{
-      'name': instance.name,
-    };
+  'name': instance.name,
+  'type': instance.type,
+};
 
 Entry _$EntryFromJson(Map<String, dynamic> json) {
   return Entry(

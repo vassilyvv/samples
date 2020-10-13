@@ -4,23 +4,22 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:intl/intl.dart' as intl;
+import 'package:web_dashboard/src/widgets/plots/bar_plot.dart';
+import 'package:web_dashboard/src/widgets/plots/line_plot.dart';
+import 'package:web_dashboard/src/widgets/plots/scatter_plot.dart';
 
 import '../api/api.dart';
-import '../utils/chart_utils.dart' as utils;
 import 'dialogs.dart';
-
-// The number of days to show in the chart
-const _daysBefore = 10;
 
 class CategoryChart extends StatelessWidget {
   final Category category;
   final DashboardApi api;
+  final String type;
 
   CategoryChart({
     @required this.category,
     @required this.api,
+    @required this.type,
   });
 
   Widget build(BuildContext context) {
@@ -31,7 +30,7 @@ class CategoryChart extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(category.name),
+              Text(category.name, style: TextStyle(color: Colors.black, fontSize: 18)),
               IconButton(
                 icon: Icon(Icons.settings),
                 onPressed: () {
@@ -62,7 +61,13 @@ class CategoryChart extends StatelessWidget {
                   if (!snapshot.hasData) {
                     return _buildLoadingIndicator();
                   }
-                  return _BarChart(entries: snapshot.data);
+
+                  switch (type) {
+                    case CHART_TYPE_LINE: return LineChart(entries: snapshot.data);
+                    case CHART_TYPE_BAR: return BarChart(entries: snapshot.data);
+                    case CHART_TYPE_SCATTER: return ScatterChart(entries: snapshot.data);
+                    default: return BarChart(entries: snapshot.data);
+                  }
                 },
               );
             },
@@ -74,38 +79,5 @@ class CategoryChart extends StatelessWidget {
 
   Widget _buildLoadingIndicator() {
     return Center(child: CircularProgressIndicator());
-  }
-}
-
-class _BarChart extends StatelessWidget {
-  final List<Entry> entries;
-
-  _BarChart({this.entries});
-
-  @override
-  Widget build(BuildContext context) {
-    return charts.BarChart(
-      [_seriesData()],
-      animate: false,
-    );
-  }
-
-  charts.Series<utils.EntryTotal, String> _seriesData() {
-    return charts.Series<utils.EntryTotal, String>(
-      id: 'Entries',
-      colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-      domainFn: (entryTotal, _) {
-        if (entryTotal == null) return null;
-
-        var format = intl.DateFormat.Md();
-        return format.format(entryTotal.day);
-      },
-      measureFn: (total, _) {
-        if (total == null) return null;
-
-        return total.value;
-      },
-      data: utils.entryTotalsByDay(entries, _daysBefore),
-    );
   }
 }

@@ -14,6 +14,7 @@ class NewCategoryDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
+      contentPadding: EdgeInsets.all(16),
       title: Text('New Category'),
       children: <Widget>[
         NewCategoryForm(),

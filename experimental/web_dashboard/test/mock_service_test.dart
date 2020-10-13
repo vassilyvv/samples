@@ -17,13 +17,13 @@ void main() {
 
     group('items', () {
       test('insert', () async {
-        var category = await api.categories.insert(Category('Coffees Drank'));
+        var category = await api.categories.insert(Category('Coffees Drank', CHART_TYPE_BAR));
         expect(category.name, 'Coffees Drank');
       });
 
       test('delete', () async {
-        await api.categories.insert(Category('Coffees Drank'));
-        var category = await api.categories.insert(Category('Miles Ran'));
+        await api.categories.insert(Category('Coffees Drank', CHART_TYPE_BAR));
+        var category = await api.categories.insert(Category('Miles Ran', CHART_TYPE_BAR));
         var removed = await api.categories.delete(category.id);
 
         expect(removed.name, 'Miles Ran');
@@ -33,8 +33,8 @@ void main() {
       });
 
       test('update', () async {
-        var category = await api.categories.insert(Category('Coffees Drank'));
-        await api.categories.update(Category('Bagels Consumed'), category.id);
+        var category = await api.categories.insert(Category('Coffees Drank', CHART_TYPE_BAR));
+        await api.categories.update(Category('Bagels Consumed', CHART_TYPE_BAR), category.id);
 
         var latest = await api.categories.get(category.id);
         expect(latest.name, equals('Bagels Consumed'));
@@ -46,7 +46,7 @@ void main() {
           expect(x, hasLength(1));
           expect(x.first.name, equals('Coffees Drank'));
         }, count: 1));
-        await api.categories.insert(Category('Coffees Drank'));
+        await api.categories.insert(Category('Coffees Drank', CHART_TYPE_BAR));
       });
     });
 
@@ -56,7 +56,7 @@ void main() {
 
       setUp(() async {
         category =
-            await api.categories.insert(Category('Lines of code committed'));
+            await api.categories.insert(Category('Lines of code committed', CHART_TYPE_BAR));
       });
 
       test('insert', () async {

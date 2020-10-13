@@ -21,9 +21,9 @@ class MockDashboardApi implements DashboardApi {
   /// Creates a [MockDashboardApi] filled with mock data for the last 30 days.
   Future<void> fillWithMockData() async {
     await Future<void>.delayed(Duration(seconds: 1));
-    var category1 = await categories.insert(Category('Coffee (oz)'));
-    var category2 = await categories.insert(Category('Running (miles)'));
-    var category3 = await categories.insert(Category('Git Commits'));
+    var category1 = await categories.insert(Category('Coffee (oz)', CHART_TYPE_BAR));
+    var category2 = await categories.insert(Category('Running (miles)', CHART_TYPE_LINE));
+    var category3 = await categories.insert(Category('Git Commits', CHART_TYPE_SCATTER));
     var monthAgo = DateTime.now().subtract(Duration(days: 30));
 
     for (var category in [category1, category2, category3]) {
@@ -56,7 +56,7 @@ class MockCategoryApi implements CategoryApi {
   @override
   Future<Category> insert(Category category) async {
     var id = uuid.Uuid().v4();
-    var newCategory = Category(category.name)..id = id;
+    var newCategory = Category(category.name, category.type)..id = id;
     _storage[id] = newCategory;
     _emit();
     return newCategory;

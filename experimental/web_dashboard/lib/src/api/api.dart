@@ -7,6 +7,10 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'api.g.dart';
 
+const String CHART_TYPE_BAR = "BAR";
+const String CHART_TYPE_LINE = "LINE";
+const String CHART_TYPE_SCATTER = "SCATTER";
+
 /// Manipulates app data,
 abstract class DashboardApi {
   CategoryApi get categories;
@@ -47,11 +51,12 @@ abstract class EntryApi {
 @JsonSerializable()
 class Category {
   String name;
+  String type;
 
   @JsonKey(ignore: true)
   String id;
 
-  Category(this.name);
+  Category(this.name, this.type);
 
   factory Category.fromJson(Map<String, dynamic> json) =>
       _$CategoryFromJson(json);

@@ -2,6 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -48,16 +49,19 @@ class Dashboard extends StatelessWidget {
     return Scrollbar(
       child: GridView(
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-          childAspectRatio: 2,
+          childAspectRatio: 1.5,
           maxCrossAxisExtent: 500,
         ),
+        padding: EdgeInsets.all(16),
         children: [
           ...categories.map(
             (category) => Card(
               child: CategoryChart(
                 category: category,
                 api: api,
+                type: category.type
               ),
+              margin: EdgeInsets.all(16),
             ),
           )
         ],

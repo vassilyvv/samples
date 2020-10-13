@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/src/api/api.dart';
+import 'package:web_dashboard/src/api/mock.dart';
 import 'package:web_dashboard/src/app.dart';
 
 class NewCategoryForm extends StatefulWidget {
@@ -13,7 +14,7 @@ class NewCategoryForm extends StatefulWidget {
 }
 
 class _NewCategoryFormState extends State<NewCategoryForm> {
-  Category _category = Category('');
+  Category _category = Category('', CHART_TYPE_BAR);
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +71,30 @@ class _EditCategoryFormState extends State<EditCategoryForm> {
                 return null;
               },
             ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: DropdownButton<String>(
+                value: widget.category.type,
+                items: [
+                  DropdownMenuItem(
+                    child: Text("Column chart"),
+                    value: CHART_TYPE_BAR,
+                  ),
+                  DropdownMenuItem(
+                    child: Text("Scatter plot"),
+                    value: CHART_TYPE_SCATTER,
+                  ),
+                  DropdownMenuItem(
+                      child: Text("Line chart"),
+                      value: CHART_TYPE_LINE
+                  ),
+                ],
+                onChanged: (value) {
+                  setState(() {
+                    widget.category.type = value;
+                  });
+                }),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
