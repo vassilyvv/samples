@@ -87,11 +87,19 @@ class _AdaptiveScaffoldState extends State<AdaptiveScaffold> {
           ),
           Expanded(
             child: Scaffold(
-              appBar: AppBar(
-                actions: widget.actions,
-                backgroundColor: Colors.grey[200],
-              ),
-              body: widget.body,
+              body: Column(children: [
+                Container(
+                  child: Align(
+                    child: Row(
+                      children: widget.actions,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                    ),
+                  ),
+                  color: Colors.grey[200],
+                  margin: EdgeInsets.all(16.0),
+                ),
+                Expanded(child: widget.body)
+              ]),
               floatingActionButton: widget.floatingActionButton,
             ),
           ),

@@ -3,6 +3,7 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'api.g.dart';
@@ -70,6 +71,33 @@ class Category {
   @override
   String toString() {
     return '<Category id=$id>';
+  }
+}
+
+/// Something that's shown above everything, e.g. Total connections, etc.
+@JsonSerializable()
+class Highlight {
+  String name;
+  String value;
+  IconData icon;
+
+  @JsonKey(ignore: true)
+  String id;
+
+  Highlight(this.name, this.value, this.icon);
+
+  factory Highlight.fromJson(Map<String, dynamic> json) =>
+      _$HighlightFromJson(json);
+
+  Map<String, dynamic> toJson() => _$HighlightToJson(this);
+
+  @override
+  operator ==(Object other) => other is Highlight && other.id == id;
+  @override
+  int get hashCode => id.hashCode;
+  @override
+  String toString() {
+    return '<Highlight id=$id>';
   }
 }
 

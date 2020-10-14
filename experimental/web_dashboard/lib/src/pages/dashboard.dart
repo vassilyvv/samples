@@ -30,7 +30,13 @@ class DashboardPage extends StatelessWidget {
                 child: CircularProgressIndicator(),
               );
             }
-            return Dashboard(snapshot.data);
+            return Dashboard([
+              Highlight("Total Sales", "10500", Icons.assignment_rounded),
+              Highlight("New Orders", "5043", Icons.receipt_long),
+              Highlight("New Users", "1065", Icons.person),
+              Highlight("Visitors", "564", Icons.person_add_alt_1),
+              Highlight("Sales/User", "5.6", Icons.supervisor_account_sharp),
+            ], snapshot.data);
           },
         );
       },
@@ -39,33 +45,80 @@ class DashboardPage extends StatelessWidget {
 }
 
 class Dashboard extends StatelessWidget {
+  final List<Highlight> highlights;
   final List<Category> categories;
 
-  Dashboard(this.categories);
+  Dashboard(this.highlights, this.categories);
 
   @override
   Widget build(BuildContext context) {
     var api = Provider.of<AppState>(context).api;
     return Scrollbar(
-      child: GridView(
-        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-          childAspectRatio: 0.75,
-          maxCrossAxisExtent: 500,
-        ),
-        padding: EdgeInsets.all(16),
-        children: [
-          ...categories.map(
-            (category) => Card(
-              child: CategoryChart(
-                category: category,
-                api: api,
-                type: category.type
+      child: Column(children: [
+        GridView(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+            childAspectRatio: 2.0,
+            maxCrossAxisExtent: 250,
+          ),
+          children: [
+            ...highlights.map(
+              (highlight) => Card(
+                color: Colors.blue[200],
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+                  child: Row(children: [
+                    Expanded(
+                        child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Icon(highlight.icon, size: 36.0, color: Colors.white))),
+                    SizedBox(
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                            Text(highlight.value,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                            Text(highlight.name,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                )),
+                          ]),
+                        ),
+                      ),
+                    )
+                  ]),
+                ),
+                margin: EdgeInsets.all(16),
               ),
-              margin: EdgeInsets.all(16),
+            )
+          ],
+        ),
+        Expanded(
+          child: GridView(
+            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+              childAspectRatio: 0.8,
+              maxCrossAxisExtent: 500,
             ),
-          )
-        ],
-      ),
+            padding: EdgeInsets.all(12),
+            children: [
+              ...categories.map(
+                (category) => Card(
+                  child: CategoryChart(category: category, api: api, type: category.type),
+                  margin: EdgeInsets.all(16),
+                ),
+              )
+            ],
+          ),
+        )
+      ]),
     );
   }
 }

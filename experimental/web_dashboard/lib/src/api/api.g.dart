@@ -22,6 +22,20 @@ Map<String, dynamic> _$CategoryToJson(Category instance) => <String, dynamic>{
   'type': instance.type,
 };
 
+Highlight _$HighlightFromJson(Map<String, dynamic> json) {
+  return Highlight(
+    json['name'] as String,
+    json['value'] as String,
+    json['icon'] as IconData
+  );
+}
+
+Map<String, dynamic> _$HighlightToJson(Highlight instance) => <String, dynamic>{
+  'name': instance.name,
+  'value': instance.value,
+  'icon': instance.icon
+};
+
 Entry _$EntryFromJson(Map<String, dynamic> json) {
   return Entry(
     json['value'] as int,
