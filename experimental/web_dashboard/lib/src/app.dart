@@ -15,6 +15,8 @@ import 'auth/mock.dart';
 import 'pages/home.dart';
 import 'pages/sign_in.dart';
 
+const int NOTIFICATION_COUNT = 8;
+
 /// The global state the app.
 class AppState {
   final Auth auth;

@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 
+import '../app.dart';
 import '../widgets/dialogs.dart';
 import '../widgets/third_party/adaptive_scaffold.dart';
 import 'dashboard.dart';
@@ -28,22 +29,77 @@ class _HomePageState extends State<HomePage> {
     return AdaptiveScaffold(
       titleFull: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-              children: [
-                Text('Dashboard'),
-                Image(image: AssetImage("assets/logo.png")),
-              ]
-          )
-      ),
+          child: Column(children: [
+            Container(
+              margin: EdgeInsets.all(16.0),
+              child: Image(
+                image: AssetImage("assets/logo.png"),
+                width: 100,
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.all(16.0),
+              width: 64,
+              height: 64,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  image: AssetImage("assets/avatar.png"),
+                ),
+              ),
+            ),
+            Text(
+              "Vassily Zuber",
+              style: TextStyle(color: Colors.grey[700], fontSize: 18, fontWeight: FontWeight.bold),
+            )
+          ])),
       title: Text('Dashboard'),
       actions: [
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: FlatButton(
             onPressed: () => _handleSignOut(),
+            child: Container(
+              margin: EdgeInsets.all(16.0),
+              width: 32,
+              height: 32,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  image: AssetImage("assets/avatar.png"),
+                ),
+              ),
+            ),
+          ),
+        ),
+        Stack(children: <Widget>[
+          Icon(Icons.notifications),
+          Positioned(
+            // draw a red marble
+            top: 0.0,
+            right: 0.0,
+            child: Container(
+              width: 16.0,
+              height: 16.0,
+              child: Align(
+                child: Text(
+                  NOTIFICATION_COUNT.toString(),
+                  style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold),
+                ),
+                alignment: Alignment.center,
+              ),
+              decoration:
+                  BoxDecoration(color: Colors.blue[200], borderRadius: BorderRadius.all(const Radius.circular(8.0))),
+            ),
+          )
+        ]),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: FlatButton(
+            onPressed: () => _handleSignOut(),
             child: Text('SIGN OUT', style: TextStyle(fontWeight: FontWeight.bold)),
           ),
-        )
+        ),
       ],
       currentIndex: _pageIndex,
       destinations: [

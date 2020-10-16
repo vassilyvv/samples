@@ -4,6 +4,8 @@
 
 import 'package:flutter/material.dart';
 
+import '../../app.dart';
+
 bool _isLargeScreen(BuildContext context) {
   return MediaQuery.of(context).size.width > 960.0;
 }
@@ -64,21 +66,28 @@ class _AdaptiveScaffoldState extends State<AdaptiveScaffold> {
               //other styles
             ),
             child: Drawer(
-              child: Column(
-                children: [
-                  widget.titleFull,
-                  for (var d in widget.destinations)
-                    ListTileTheme(
-                      dense: true,
-                      selectedColor: Colors.black,
-                      child: ListTile(
-                        leading: Icon(d.icon),
-                        title: Text(d.title, style: TextStyle(fontSize: 16)),
-                        selected: widget.destinations.indexOf(d) == widget.currentIndex,
-                        onTap: () => _destinationTapped(d),
-                      ),
+              child: Container(
+                padding: EdgeInsets.only(left: 16.0, top: 16.0, bottom: 16.0),
+                child: Column(
+                  children: [
+                    Container(
+                      child: widget.titleFull,
+                      padding: EdgeInsets.only(bottom: 24.0),
                     ),
-                ],
+                    for (var d in widget.destinations)
+                      ListTileTheme(
+                        dense: true,
+                        selectedColor: Colors.black,
+                        child: ListTile(
+                          leading: Icon(d.icon),
+                          trailing: widget.destinations.indexOf(d) == 0 ? _notificationCount(NOTIFICATION_COUNT) : null,
+                          title: Text(d.title, style: TextStyle(fontSize: 16)),
+                          selected: widget.destinations.indexOf(d) == widget.currentIndex,
+                          onTap: () => _destinationTapped(d),
+                        ),
+                      ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -169,5 +178,19 @@ class _AdaptiveScaffoldState extends State<AdaptiveScaffold> {
     if (idx != widget.currentIndex) {
       widget.onNavigationIndexChange(idx);
     }
+  }
+
+  Widget _notificationCount(int count) {
+    return Container(
+      width: 24.0,
+      height: 24.0,
+      child: Align(
+        child: Text(count.toString(), style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+        alignment: Alignment.center,
+      ),
+      decoration: BoxDecoration(
+          color: Colors.blue[200],
+          borderRadius: BorderRadius.all(const Radius.circular(8.0))),
+    );
   }
 }
