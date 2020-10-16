@@ -89,6 +89,10 @@ class _EditCategoryFormState extends State<EditCategoryForm> {
                       child: Text("Line chart"),
                       value: CHART_TYPE_LINE
                   ),
+                  DropdownMenuItem(
+                      child: Text("Scatter Line chart"),
+                      value: CHART_TYPE_SCATTER_LINE
+                  ),
                 ],
                 onChanged: (value) {
                   setState(() {

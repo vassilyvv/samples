@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 import 'package:web_dashboard/src/widgets/plots/bar_plot.dart';
 import 'package:web_dashboard/src/widgets/plots/line_plot.dart';
+import 'package:web_dashboard/src/widgets/plots/scatter_line_plot.dart';
 import 'package:web_dashboard/src/widgets/plots/scatter_plot.dart';
 
 import '../api/api.dart';
@@ -93,6 +94,8 @@ class CategoryChart extends StatelessWidget {
                           return BarChart(entries: snapshot.data);
                         case CHART_TYPE_SCATTER:
                           return ScatterChart(entries: snapshot.data);
+                        case CHART_TYPE_SCATTER_LINE:
+                          return ScatterLineChart(entries: snapshot.data);
                         default:
                           return BarChart(entries: snapshot.data);
                       }

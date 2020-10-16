@@ -11,6 +11,7 @@ part 'api.g.dart';
 const String CHART_TYPE_BAR = "BAR";
 const String CHART_TYPE_LINE = "LINE";
 const String CHART_TYPE_SCATTER = "SCATTER";
+const String CHART_TYPE_SCATTER_LINE = "SCATTER_LINE";
 
 /// Manipulates app data,
 abstract class DashboardApi {

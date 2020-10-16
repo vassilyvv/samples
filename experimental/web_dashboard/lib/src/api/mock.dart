@@ -24,9 +24,10 @@ class MockDashboardApi implements DashboardApi {
     var category1 = await categories.insert(Category('Coffee (oz)', CHART_TYPE_BAR));
     var category2 = await categories.insert(Category('Running (miles)', CHART_TYPE_LINE));
     var category3 = await categories.insert(Category('Git Commits', CHART_TYPE_SCATTER));
+    var category4 = await categories.insert(Category('Steps walked', CHART_TYPE_SCATTER_LINE));
     var monthAgo = DateTime.now().subtract(Duration(days: 30));
 
-    for (var category in [category1, category2, category3]) {
+    for (var category in [category1, category2, category3, category4]) {
       for (var i = 0; i < 30; i++) {
         var date = monthAgo.add(Duration(days: i));
         var value = Random().nextInt(6) + 1;

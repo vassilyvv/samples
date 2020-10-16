@@ -2,6 +2,8 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -35,7 +37,6 @@ class DashboardPage extends StatelessWidget {
               Highlight("New Orders", "5043", Icons.receipt_long),
               Highlight("New Users", "1065", Icons.person),
               Highlight("Visitors", "564", Icons.person_add_alt_1),
-              Highlight("Sales/User", "5.6", Icons.supervisor_account_sharp),
             ], snapshot.data);
           },
         );
@@ -52,52 +53,71 @@ class Dashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var api = Provider.of<AppState>(context).api;
+    var api = Provider
+        .of<AppState>(context)
+        .api;
     return Scrollbar(
       child: Column(children: [
         GridView(
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
-          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-            childAspectRatio: 2.0,
-            maxCrossAxisExtent: 250,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            childAspectRatio: 2.5,
+            crossAxisCount: 4,
           ),
           children: [
             ...highlights.map(
-              (highlight) => Card(
-                color: Colors.blue[200],
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 12.0, right: 12.0),
-                  child: Row(children: [
-                    Expanded(
-                        child: Align(
+                  (highlight) =>
+                  Card(
+                    color: Colors.blue[200],
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+                      child: Row(children: [
+                        Expanded(
+                          child: Align(
                             alignment: Alignment.centerLeft,
-                            child: Icon(highlight.icon, size: 36.0, color: Colors.white))),
-                    SizedBox(
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                            Text(highlight.value,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                )),
-                            Text(highlight.name,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                )),
-                          ]),
+                            child: Expanded(
+                              child: Container(
+                                padding: EdgeInsets.all(12.0),
+                                child: LayoutBuilder(builder: (context, constraint) {
+                                  return Icon(
+                                      highlight.icon, size: constraint.biggest.height * 0.5, color: Colors.white);
+                                }),
+                                decoration: BoxDecoration(
+                                  color: Colors.blue[100],
+                                  shape: BoxShape.circle,
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    )
-                  ]),
-                ),
-                margin: EdgeInsets.all(16),
-              ),
+                        SizedBox(
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                              child: LayoutBuilder(builder: (context, constraint) {
+                                return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                                  Text(highlight.value,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: min(constraint.biggest.height * 0.2, 22),
+                                        fontWeight: FontWeight.bold,
+                                      )),
+                                  Text(highlight.name,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: min(constraint.biggest.height * 0.14, 14),
+                                      )),
+                                ]);
+                              }),
+                            ),
+                          ),
+                        )
+                      ]),
+                    ),
+                    margin: EdgeInsets.all(16),
+                  ),
             )
           ],
         ),
@@ -110,10 +130,11 @@ class Dashboard extends StatelessWidget {
             padding: EdgeInsets.all(12),
             children: [
               ...categories.map(
-                (category) => Card(
-                  child: CategoryChart(category: category, api: api, type: category.type),
-                  margin: EdgeInsets.all(16),
-                ),
+                    (category) =>
+                    Card(
+                      child: CategoryChart(category: category, api: api, type: category.type),
+                      margin: EdgeInsets.all(16),
+                    ),
               )
             ],
           ),
