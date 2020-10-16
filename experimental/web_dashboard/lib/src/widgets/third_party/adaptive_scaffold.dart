@@ -58,32 +58,29 @@ class _AdaptiveScaffoldState extends State<AdaptiveScaffold> {
     if (_isLargeScreen(context)) {
       return Row(
         children: [
-          Drawer(
-            child: Column(
-              children: [
-                DrawerHeader(
-                  child: Center(
-                    child: widget.titleFull,
-                  ),
-                ),
-                for (var d in widget.destinations)
-                  ListTileTheme(
-                    dense: true,
-                    selectedColor: Colors.black,
-                    child: ListTile(
-                      leading: Icon(d.icon),
-                      title: Text(d.title, style: TextStyle(fontSize: 16)),
-                      selected: widget.destinations.indexOf(d) == widget.currentIndex,
-                      onTap: () => _destinationTapped(d),
-                    ),
-                  ),
-              ],
+          Theme(
+            data: Theme.of(context).copyWith(
+              canvasColor: Colors.grey[200], //This will change the drawer background to blue.
+              //other styles
             ),
-          ),
-          VerticalDivider(
-            width: 1,
-            thickness: 1,
-            color: Colors.grey[300],
+            child: Drawer(
+              child: Column(
+                children: [
+                  widget.titleFull,
+                  for (var d in widget.destinations)
+                    ListTileTheme(
+                      dense: true,
+                      selectedColor: Colors.black,
+                      child: ListTile(
+                        leading: Icon(d.icon),
+                        title: Text(d.title, style: TextStyle(fontSize: 16)),
+                        selected: widget.destinations.indexOf(d) == widget.currentIndex,
+                        onTap: () => _destinationTapped(d),
+                      ),
+                    ),
+                ],
+              ),
+            ),
           ),
           Expanded(
             child: Scaffold(
