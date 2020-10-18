@@ -76,14 +76,14 @@ class CategoryChart extends StatelessWidget {
               child: FutureBuilder<List<Entry>>(
                 future: api.entries.list(category.id),
                 builder: (context, futureSnapshot) {
-                  if (!futureSnapshot.hasData) {
+                  if (!futureSnapshot.hasData || futureSnapshot.data.isEmpty) {
                     return _buildLoadingIndicator();
                   }
                   return StreamBuilder<List<Entry>>(
                     initialData: futureSnapshot.data,
                     stream: api.entries.subscribe(category.id),
                     builder: (context, snapshot) {
-                      if (!snapshot.hasData) {
+                      if (!snapshot.hasData || snapshot.data.isEmpty) {
                         return _buildLoadingIndicator();
                       }
 
@@ -119,12 +119,18 @@ class CategoryChart extends StatelessWidget {
         if (!futureSnapshot.hasData) {
           return _buildLoadingIndicator();
         }
+        if (futureSnapshot.data.isEmpty) {
+          return Center(child: Text("N/A"));
+        }
         return StreamBuilder<List<Entry>>(
             initialData: futureSnapshot.data,
             stream: api.entries.subscribe(category.id),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
                 return _buildLoadingIndicator();
+              }
+              if (snapshot.data.isEmpty) {
+                return Center(child: Text("N/A"));
               }
 
               return Text(fun(snapshot.data),

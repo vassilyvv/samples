@@ -2,7 +2,9 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:web_dashboard/src/utils/notifications.dart';
 
 import '../../app.dart';
 
@@ -181,11 +183,12 @@ class _AdaptiveScaffoldState extends State<AdaptiveScaffold> {
   }
 
   Widget _notificationCount(int count) {
+    var trim = trimNotificationCount(count);
     return Container(
-      width: 24.0,
-      height: 24.0,
+      height: 32.0,
+      width: 32.0,
       child: Align(
-        child: Text(count.toString(), style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+        child: Text(trim, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
         alignment: Alignment.center,
       ),
       decoration: BoxDecoration(

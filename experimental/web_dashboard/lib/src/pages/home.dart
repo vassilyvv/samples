@@ -3,6 +3,7 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:web_dashboard/src/utils/notifications.dart';
 
 import '../app.dart';
 import '../widgets/dialogs.dart';
@@ -57,45 +58,50 @@ class _HomePageState extends State<HomePage> {
       actions: [
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Container(
-            // margin: EdgeInsets.all(16.0),
-            width: 32,
-            height: 32,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image: AssetImage("assets/avatar.png"),
+          child: InkWell(
+            onTap: () {},
+            child: Container(
+              // margin: EdgeInsets.all(16.0),
+              width: 32,
+              height: 32,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  image: AssetImage("assets/avatar.png"),
+                ),
               ),
             ),
           ),
         ),
-        Container(
-          width: 32,
-          height: 32,
-          margin: const EdgeInsets.all(8.0),
-          alignment: Alignment.center,
-          child: Stack(
-            children: <Widget>[
-              Icon(Icons.notifications),
-              Positioned(
-                // draw a red marble
-                top: 0.0,
-                right: 0.0,
-                child: Container(
-                  width: 16.0,
-                  height: 16.0,
-                  child: Align(
-                    child: Text(
-                      NOTIFICATION_COUNT.toString(),
-                      style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold),
+        InkWell(
+          onTap: () {},
+          child: Container(
+            width: 32,
+            height: 32,
+            margin: const EdgeInsets.all(8.0),
+            alignment: Alignment.center,
+            child: Stack(
+              children: <Widget>[
+                Icon(Icons.notifications, size: 36.0,),
+                Positioned(
+                  // draw a red marble
+                  top: 0.0,
+                  right: 0.0,
+                  child: Container(
+                    padding: EdgeInsets.all(4.0),
+                    child: Align(
+                      child: Text(
+                        trimNotificationCount(NOTIFICATION_COUNT),
+                        style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
+                      ),
+                      alignment: Alignment.center,
                     ),
-                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        color: Colors.blue[200], borderRadius: BorderRadius.all(const Radius.circular(8.0))),
                   ),
-                  decoration: BoxDecoration(
-                      color: Colors.blue[200], borderRadius: BorderRadius.all(const Radius.circular(8.0))),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
         Padding(
